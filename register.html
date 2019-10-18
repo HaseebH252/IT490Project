@@ -14,12 +14,14 @@ form
 </style><br><br>
 
 <!-- Account Creation -->
-<form action="login.php" method="post" onsubmit="return password()">
-    <h3>Log In</h3>
-    <input type=text name="email"> Enter email<br><br>
+<form action="send.php" method="post" onsubmit="return password()">
+    <h3>Create New Account</h3>
+    <input type=text name="fname"> Enter First Name <br><br>
+    <input type=text name="lname"> Enter Last Name <br><br>
+    <input type=email name="email"> Enter email<br><br>
     <input type=password name="pass" id="account-pass"> Enter Password<br><br>
   
-  <input type=submit value="Login">
+  <input type=submit value="Create Account">
 </form>
 <!--- End Account Creation --->
 <br>
