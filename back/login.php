@@ -3,7 +3,6 @@
 
 
 require('rmq/authClient.php');
-require('logs/user.txt');
 
 $email = $_POST['email'];
 $password = $_POST['password'];

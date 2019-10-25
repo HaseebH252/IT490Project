@@ -1,90 +1,223 @@
 <?php
-
-//PATH SHOULD BE CHANGE BASED ON MACHINE THAT RUNS THE CODE
 require_once __DIR__ . '/vendor/autoload.php';
 include ('rmq.php');
-include ('../back/db.php');
+require('back/db.php');
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
+//========================================================================================
+//DECLARE
+/*$hostip = 'localhost';
+$port = '5672';
+$rmqLogin = 'guest1';
+$rmqPass = 'guest1';*/
+$queueName = 'authentication';
 
-//CONNECTING TO RMQ AND QUEUE
-$connection = new AMQPStreamConnection($host, $port, $username, $password);
+//CONNECT TO RMQ
+$connection = new AMQPStreamConnection($rmq_host, $rmq_port, $rmq_username, $rmq_password);
 $channel = $connection->channel();
 $channel->queue_declare($queueName, false, false, false, false);
-echo " [*] RMQ Authentication Listener Started:\n";
 
 
+// Create connection
+$conn = new mysqli($sql_host,$sql_user,$sql_pass,$sql_db);
+//========================================================================================
 
-$callback = function ($msg) use ($sql_pass, $sql_db, $sql_user, $sql_host) {
+//========================================================================================
+//FUNCTION TO CHECK WHETHER USER EXISTS IN DB
+function auth($receivedEmail,$receivedPass){
+    echo "auth() engaged";
+    //DB INFO
+  /*  $servername = "localhost";
+    $username = "root";
+    $password = "password";
+    $db = "it490";*/
+  global $conn;
+  global $sql_db;
+    // Create connection
+    //$conn = new mysqli($sql_host,$sql_user,$sql_pass,$sql_db);
+    // Check connection
+    echo "SQL Connected";
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
 
-	// Create connection
-	$conn = new mysqli($sql_host,$sql_user,$sql_pass,$sql_db);
-	// Check connection
-	if ($conn->connect_error) {
-    		die("Connection failed: " . $conn->connect_error);
+    //DECLARE VARIABLES FOR EMAIL AND PASSWORD
+    $email=$receivedEmail;
+    $pass=$receivedPass;
+
+    //PERFORM QUERY ON DB
+    $sql = "SELECT * FROM accounts WHERE Email='$email'";
+
+    ($t = mysqli_query ( $conn,  $sql   ) )  or die ( mysqli_error ($conn) );
+    $num = mysqli_num_rows($t);
+
+    echo "QUERY PERFORMED \n Found $num of rows \n\n";
+
+    // Check hash
+
+
+    //DECIDE WHAT TO RETURN FROM THIS FUNCTION
+    if ($num == 0){
+        echo "not found";
+        return false;
+    }else {
+        //Check Hash
+        while ( $r = mysqli_fetch_array ( $t, MYSQLI_ASSOC) )
+        {
+            $hash = $r['Pass'];
+            echo "<br>Hashed Pass is $hash<br>";
+            if (password_verify($pass, $hash))
+            {
+                echo "<br>Password Valid!<br>";
+                return true;
+            }
+            else
+            {
+                echo "<br>Password Not Valid<br>";
+                return false;
+            }
+        }
+    }
+
+/*
+        //TEST QUERY RESULTS
+        foreach ($result as $row){
+            if ($email == $row["accEmail"] && $pass == $row['accPass']){
+                echo "User exists\n";
+                break;
+            }else{
+                continue;
+            }
+        }
+*/
+
+}
+//========================================================================================
+
+//========================================================================================
+//FUNCTION THAT REGISTERS THE USER
+function reg($receivedFname,$receivedLname,$receivedEmail,$receivedPass){
+    echo "reg() engaged";
+    echo $receivedFname;
+    echo $receivedLname;
+    echo $receivedEmail;
+    echo $receivedPass;
+    //DB INFO
+/*    $servername = "localhost";
+    $username = "root";
+    $password = "password";
+    $db = "it490";*/
+global $conn;
+global $sql_db;
+    // Create connection
+/*    $conn = new mysqli($servername, $username, $password, $db);*/
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    //PERFORM QUERY ON DB TO CHECK FOR ACCOUNT
+    $sql = "SELECT * FROM accounts WHERE Email='$receivedEmail' ";
+    //$sql = "SELECT * FROM accounts WHERE Email='1@gmail.com' ";
+    //$result = $conn->query($sql);
+    $result = mysqli_query($conn,$sql);
+
+    echo "query performed\n";
+    $num = mysqli_num_rows($result);
+    echo "\n $num \n";
+    if ( $num <> 0 ) {
+        //USER EXISTS
+        echo "account exists";
+        return false;
+    } else {
+        //USER DOESN'T EXIST. PROCEED
+        $sql = "INSERT INTO accounts (Fname, LName, Email, Pass) VALUES ('$receivedFname', '$receivedLname', '$receivedEmail', '$receivedPass')";
+        //$sql = "INSERT INTO accounts (Fname, LName, Email, Pass) VALUES ('jane', 'dope', 'asdasd@yahoo.com', '1234568')";
+        $conn->query($sql);
+        //USER CREATED
+        echo "TRUE RETURNED\n";
+        return true;
+    }
+}
+//========================================================================================
+//========================================================================================
+
+//Add Log to DB
+function logging($receivedType,$receivedMessage){
+    echo "log() engaged";
+    //DB INFO
+    /*  $servername = "localhost";
+      $username = "root";
+      $password = "password";
+      $db = "it490";*/
+    global $conn;
+    // Create connection
+    //$conn = new mysqli($sql_host,$sql_user,$sql_pass,$sql_db);
+    // Check connection
+    echo "SQL Connected";
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    //DECLARE VARIABLES FOR Log type AND log message
+    $type=$receivedType;
+    $message=$receivedMessage;
+
+    //PERFORM QUERY ON DB
+    $sql = "INSERT INTO logs (date,type,message) VALUES (NOW(), '$type','$message')";
+
+    $conn->query($sql);
+    //Log CREATED
+    echo "TRUE RETURNED\n";
+    return true;
+
 }
 
-	//DECLARE VARIABLES FOR EMAIL AND PASSWORD
-	$email='';
-	$pass='';
-
-	//DECODE RECEIVED MESSAGE FROM JSON INTO PHP ARRAY
-	$request = json_decode($msg->body,true);
-
-	//READ CONTENTS OF RECEIVED ARRAY
-	if (is_array($request)){
-		$email = $request['email'];
-		$pass =  $request['pass'];
-		//echo $email." message\n";
-		//echo $pass." message\n";
-	}
-
-	//PERFORM QUERY ON DB
-	$s= "select * from accounts where email='$email' AND password = '$pass'";
-	echo "<br> SQL is $s<br><br>";
-	($t = mysqli_query ( $sql_db,  $s   ) )  or die ( mysqli_error ($sql_db) );
-	$num = mysqli_num_rows($t);
-	echo "<br>There are $num rows<br>";
-
-	//TEST QUERY RESULTS
-
-	while ( $r = mysqli_fetch_array ( $t, MYSQLI_ASSOC) )
-	{
-		$hash = $r['pass'];
-		echo "<br>Hashed Pass is $hash<br>";
-		if (password_verify($pass, $hash))
-		{
-			echo "<br>Password Valid!<br>";
-			return true;
-		}
-		else
-		{
-			echo "<br>Password Not Valid<br>";
-			return false;
-		}
-	}
 
 
-	//RETURN MESSAGE TO THE CLIENT
-	//$msgBack = new AMQPMessage ("messageBack", array('correlations_id' =>$msg->get("correlation_id")));
-	//$msg->delivery_info['channel']->basic_publish($msgBack,'',$msg->get('reply_to'));
-	//$msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
 
+// CALL IT FROM INSIDE OF CALLBACK TO PROCEED WITH AUTH/REG
+function processMessage($message){
+    echo "processMessage() engaged";
+    //change based on received array and type of auth/reg flag
+    switch ($message['Type']) {
+        //change
+        case "Login":
+            return auth($message['email'],$message['pass']);
+            break;
+        //change
+        case "Register":
+            return reg($message['firstname'],$message['lastname'],$message['email'],$message['pass']);
+            break;
+        case "Log":
+            return logging($message['type'],$message['message']);
+            break;
+    }
+}
 
-		
-		//echo $row["accEmail\n"];
-		//echo $row["accPass\n"];
-
-	}
-
+//REACTS TO INITIAL MESSAGE FROM RMQ
+//========================================================================================
+$callback = function ($receivedArray){
+    $array = json_decode($receivedArray->body, true);
+    echo "Message Received, Processing";
+    echo print_r($array);
+    echo $receivedArray->get('correlation_id');
+    echo $receivedArray->get('reply_to');
+    //DECIDE WHETHER TO ENCODE OR NOT BASED ON WHAT IS RETURNED FROM FUNCTIONS
+    $msg = new AMQPMessage((json_encode(processMessage($array))), array('correlation_id' =>$receivedArray->get('correlation_id')));
+    $receivedArray->delivery_info['channel']->basic_publish($msg,'',$receivedArray->get('reply_to'));
+    //$receivedArray->delivery_info['channel']->basic_ack($receivedArray->delivery_info['delivery_tag']);
 };
+//========================================================================================
 
-//CONSUMING MESSAGES
+
+//========================================================================================
 $channel->basic_consume($queueName, '', false, true, false, false, $callback);
 while ($channel->is_consuming()) {
     $channel->wait();
 }
 $channel->close();
 $connection->close();
+//========================================================================================
 ?>

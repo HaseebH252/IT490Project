@@ -2,7 +2,7 @@
 require_once __DIR__ . '/vendor/autoload.php';
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
-include __DIR__.'/attom.php';
+include __DIR__ . '/attom.php';
 
 //DECLARE RMQ CONNECT VARIABLES
 $hostip = 'localhost';
