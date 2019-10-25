@@ -16,7 +16,7 @@ class ComposerStaticInitb4e08e94fe2979335bd0a6de6ab73bea
     public static $prefixDirsPsr4 = array (
         'PhpAmqpLib\\' => 
         array (
-            0 => __DIR__ . '/..',
+            0 => __DIR__ . '/..' . '/php-amqplib/php-amqplib/PhpAmqpLib',
         ),
     );
 

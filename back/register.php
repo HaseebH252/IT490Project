@@ -8,15 +8,18 @@ $last_name = $mysqli->escape_string($_POST['lastname']);
 $email = $mysqli->escape_string($_POST['email']);
 $password = $mysqli->escape_string($_POST['password']);
 
+$hash=password_hash($password, PASSWORD_DEFAULT);
+
+
 
 $authenticate = new RabbitMQAuthClient();
 
-$response = $authenticate->reg($email,$userpass,$first_name,$last_name);
+$response = $authenticate->reg($first_name,$last_name,$email,$hash);
 
 //$response = json_decode($test);
 //
 
-if ($response == false){
+if ($response == "false"){
 	echo "Account with email already exists";
 	$_SESSION['message'] = 'User with this email already exists!';
 	header("location: error.php");

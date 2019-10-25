@@ -1,7 +1,7 @@
 <?php
 /*RMQ Connection Settings*/
-$host = 'l27.0.0.1';
-$port = '5672';
-$username = 'guest';
-$password = 'guest';
+$rmq_host = '127.0.0.1';
+$rmq_port = '5672';
+$rmq_username = 'guest';
+$rmq_password = 'guest';
 ?>

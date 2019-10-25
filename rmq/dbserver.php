@@ -1,21 +1,26 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
+include ('rmq.php');
+require ('back/db.php');
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
 //========================================================================================
 //DECLARE
-$hostip = 'localhost';
+/*$hostip = 'localhost';
 $port = '5672';
 $rmqLogin = 'guest1';
-$rmqPass = 'guest1';
-$queueName = 'rpc_queue';
+$rmqPass = 'guest1';*/
+$queueName = 'authentication';
 
 //CONNECT TO RMQ
-$connection = new AMQPStreamConnection($hostip, $port, $rmqLogin, $rmqPass);
+$connection = new AMQPStreamConnection($rmq_host, $rmq_port, $rmq_username, $rmq_password);
 $channel = $connection->channel();
 $channel->queue_declare($queueName, false, false, false, false);
 
+
+// Create connection
+$conn = new mysqli($sql_host,$sql_user,$sql_pass,$sql_db);
 //========================================================================================
 
 //========================================================================================
@@ -23,13 +28,14 @@ $channel->queue_declare($queueName, false, false, false, false);
 function auth($receivedEmail,$receivedPass){
     echo "auth() engaged";
     //DB INFO
-    $servername = "localhost";
+  /*  $servername = "localhost";
     $username = "root";
     $password = "password";
-    $db = "it490";
-
+    $db = "it490";*/
+  global $conn;
+  global $sql_db;
     // Create connection
-    $conn = new mysqli($servername, $username, $password,$db);
+    //$conn = new mysqli($sql_host,$sql_user,$sql_pass,$sql_db);
     // Check connection
     echo "SQL Connected";
     if ($conn->connect_error) {
@@ -41,17 +47,37 @@ function auth($receivedEmail,$receivedPass){
     $pass=$receivedPass;
 
     //PERFORM QUERY ON DB
-    $sql = "SELECT * FROM accounts WHERE Email='$email' AND Pass = '$pass'";
-    $result = $conn->query($sql);
-    $num = mysqli_num_rows($result);
-    echo "QUERY PERFORMED";
+    $sql = "SELECT * FROM accounts WHERE Email='$email'";
+
+    ($t = mysqli_query ( $conn,  $sql   ) )  or die ( mysqli_error ($conn) );
+    $num = mysqli_num_rows($t);
+
+    echo "QUERY PERFORMED \n Found $num of rows \n\n";
+
+    // Check hash
+
 
     //DECIDE WHAT TO RETURN FROM THIS FUNCTION
     if ($num == 0){
+        echo "not found";
         return false;
     }else {
-        echo "TRUE RETURNED";
-        return true;
+        //Check Hash
+        while ( $r = mysqli_fetch_array ( $t, MYSQLI_ASSOC) )
+        {
+            $hash = $r['Pass'];
+            echo "<br>Hashed Pass is $hash<br>";
+            if (password_verify($pass, $hash))
+            {
+                echo "<br>Password Valid!<br>";
+                return true;
+            }
+            else
+            {
+                echo "<br>Password Not Valid<br>";
+                return false;
+            }
+        }
     }
 
 /*
@@ -78,13 +104,14 @@ function reg($receivedFname,$receivedLname,$receivedEmail,$receivedPass){
     echo $receivedEmail;
     echo $receivedPass;
     //DB INFO
-    $servername = "localhost";
+/*    $servername = "localhost";
     $username = "root";
     $password = "password";
-    $db = "it490";
-
+    $db = "it490";*/
+global $conn;
+global $sql_db;
     // Create connection
-    $conn = new mysqli($servername, $username, $password, $db);
+/*    $conn = new mysqli($servername, $username, $password, $db);*/
     // Check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
@@ -107,13 +134,47 @@ function reg($receivedFname,$receivedLname,$receivedEmail,$receivedPass){
         //USER DOESN'T EXIST. PROCEED
         $sql = "INSERT INTO accounts (Fname, LName, Email, Pass) VALUES ('$receivedFname', '$receivedLname', '$receivedEmail', '$receivedPass')";
         //$sql = "INSERT INTO accounts (Fname, LName, Email, Pass) VALUES ('jane', 'dope', 'asdasd@yahoo.com', '1234568')";
-        $ror =$conn->query($sql);
+        $conn->query($sql);
         //USER CREATED
         echo "TRUE RETURNED\n";
         return true;
     }
 }
 //========================================================================================
+//========================================================================================
+
+//Add Log to DB
+function logging($receivedType,$receivedMessage){
+    echo "log() engaged";
+    //DB INFO
+    /*  $servername = "localhost";
+      $username = "root";
+      $password = "password";
+      $db = "it490";*/
+    global $conn;
+    // Create connection
+    //$conn = new mysqli($sql_host,$sql_user,$sql_pass,$sql_db);
+    // Check connection
+    echo "SQL Connected";
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    //DECLARE VARIABLES FOR Log type AND log message
+    $type=$receivedType;
+    $message=$receivedMessage;
+
+    //PERFORM QUERY ON DB
+    $sql = "INSERT INTO logs (date,type,message) VALUES (NOW(), '$type','$message')";
+
+    $conn->query($sql);
+    //Log CREATED
+    echo "TRUE RETURNED\n";
+    return true;
+
+}
+
+
 
 
 // CALL IT FROM INSIDE OF CALLBACK TO PROCEED WITH AUTH/REG
@@ -128,6 +189,9 @@ function processMessage($message){
         //change
         case "Register":
             return reg($message['firstname'],$message['lastname'],$message['email'],$message['pass']);
+            break;
+        case "Log":
+            return logging($message['type'],$message['message']);
             break;
     }
 }
