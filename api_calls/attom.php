@@ -76,5 +76,5 @@ function receiveCurl($zip){
     return $addresses;
 }
 //TO TEST THIS CODE
-receiveCurl('07108');
+//receiveCurl('07108');
 ?>
