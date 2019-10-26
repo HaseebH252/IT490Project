@@ -2,19 +2,16 @@
 require_once __DIR__ . '/vendor/autoload.php';
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
-include __DIR__ . '/attom.php';
+include 'attom.php';
+include 'flood.php';
+include 'rmq.php';
 
-//DECLARE RMQ CONNECT VARIABLES
-$hostip = 'localhost';
-$port = '5672';
-$rmqLogin = 'guest1';
-$rmqPass = 'guest1';
 
 //DMZ QUEUE
 $queueName = 'dmz_queue';
 
 //CONNECT TO RMQ
-$connection = new AMQPStreamConnection($hostip, $port, $rmqLogin, $rmqPass);
+$connection = new AMQPStreamConnection($rmq_host, $rmq_port, $rmq_username, $rmq_password);
 $channel = $connection->channel();
 $channel->queue_declare($queueName, false, false, false, false);
 
@@ -30,7 +27,7 @@ function processMessage($message){
 
     //attom api data
     //extract data from api, and add it to array
-    $returnApiData['attom'] = receiveCurl($zip);
+    $returnApiData['attomAddress'] = receiveCurlAttom($zip);
 
     //here will be calls for other API functions that will be added to $returnApiData array
 
@@ -41,6 +38,14 @@ function processMessage($message){
 //TESTING
 //call function to get attom api info, and example of how to access data inside this nested array.
 $returnedDataForTest = processMessage('07108');
+
+
+
+//test to allow multiple api data to be processed
+
+
+
+
 
 //tests by zipcode and echoes entire array with nested arrays inside. Demonstrates structure of array
 echo "Prints array. Take a look to understand the array structure\n";

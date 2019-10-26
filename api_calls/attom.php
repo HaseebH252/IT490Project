@@ -16,7 +16,7 @@ function splitObject($property){
 //First function, Currently receives only zipcode for testing purposes
 //Makes call to api, receives a json string
 //string then decoded into array
-function receiveCurl($zip){
+function receiveCurlAttom($zip){
     $curl = curl_init();
     //$postalCode = $message;
     $postalCode = $zip;
@@ -75,5 +75,9 @@ function receiveCurl($zip){
     return $valuesArray;
 }
 //TO TEST THIS CODE
-//receiveCurl('07108');
+
+
+$attomAddresses= receiveCurlAttom('07108');
+
+//print_r($attomAddresses);
 ?>
