@@ -1,5 +1,6 @@
 <?php
 
+
 ?>
 
 
@@ -28,36 +29,29 @@
             </h3>
             <a href="main.php"> Go back to search</a>
             <div class="row">
-                <div class="col-md-9">
+
+
+                <div class="col-md-8">
                     <img alt="Google Map" src="images/map.jpg" width="100%">
                 </div>
-                <div class="col-md-3">
-                    <ul class="list-unstyled" style="padding: 10%;">
-                        <li class="list-item">
-                            Lorem ipsum dolor sit amet
-                        </li>
-                        <li class="list-item">
-                            Consectetur adipiscing elit
-                        </li>
-                        <li class="list-item">
-                            Integer molestie lorem at massa
-                        </li>
-                        <li class="list-item">
-                            Facilisis in pretium nisl aliquet
-                        </li>
-                        <li class="list-item">
-                            Nulla volutpat aliquam velit
-                        </li>
-                        <li class="list-item">
-                            Faucibus porta lacus fringilla vel
-                        </li>
-                        <li class="list-item">
-                            Aenean sit amet erat nunc
-                        </li>
-                        <li class="list-item">
-                            Eget porttitor lorem
-                        </li>
-                    </ul>
+
+
+                <div class="col-md-4" style="overflow-y:auto;height:auto;">
+
+
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">List group item heading</h5>
+                                <small>3 days ago</small>
+                            </div>
+                            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget
+                                risus varius blandit.</p>
+                            <small>Donec id elit non mi porta.</small>
+                        </a>
+                    </div>
+
+
                 </div>
             </div>
             <div class="row">
@@ -93,17 +87,6 @@
 
                         </tr>
 
-
-                        <tr>
-                            <td>
-                                Robbery
-                            </td>
-                            <td>
-                                25
-                            </td>
-
-                        </tr>
-
                         </tbody>
                     </table>
                 </div>
@@ -127,10 +110,23 @@
                     </p>
 
                 </div>
-</div>
+            </div>
 
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/scripts.js"></script>
+
+            <script type="text/javascript">
+                <!--
+                function toggle_visibility(id) {
+                    var e = document.getElementById(id);
+                    if (e.style.display == 'block')
+                        e.style.display = 'none';
+                    else
+                        e.style.display = 'block';
+                }
+
+                //-->
+            </script>
+            <script src="js/jquery.min.js"></script>
+            <script src="js/bootstrap.min.js"></script>
+            <script src="js/scripts.js"></script>
 </body>
 </html>

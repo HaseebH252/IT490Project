@@ -64,7 +64,7 @@ class RabbitMQAPIClient
                 'reply_to' => $this->callback_queue
             )
         );
-        $this->channel->basic_publish($msg, '', 'apiCall');
+        $this->channel->basic_publish($msg, '', 'dmz_queue');
         while (!$this->response) {
             $this->channel->wait();
         }
