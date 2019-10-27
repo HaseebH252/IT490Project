@@ -1,6 +1,6 @@
 <?php
 
-include ('attom.php');
+//include ('attom.php');
 
 //First function, Currently receives only an address that is url encoded for testing purposes
 //Makes call to api, receives a json string
@@ -60,28 +60,28 @@ function receiveCurlYelp($url_params){
         return $result_yelp;
     }
 }
+
+function getYelp($attomAddresses){
+
 //TO TEST THIS CODE
-$url_params = array();
+    $url_params = array();
 
+    $location = $attomAddresses;
+    $term = 'dinner';
+    $limit = '3';
 
-
-
-$location= $attomAddresses;
-$term = 'dinner';
-$limit = '3';
-
-$result = array();
-foreach ($location as $key=>$street) {
+    $result = array();
+    foreach ($location as $key => $street) {
         $url_params['term'] = $term;
         $url_params['location'] = $street['street'];
         $url_params['limit'] = $limit;
 
         //print_r($url_params);
-    for ($x=0;$x<3;$x++){
-        $result[$x]= receiveCurlYelp($url_params);
+        for ($x = 0; $x < 3; $x++) {
+            $result[$x] = receiveCurlYelp($url_params);
+        }
     }
-
+    return $result;
+    //print_r($result);
 }
-
-print_r($result);
 ?>

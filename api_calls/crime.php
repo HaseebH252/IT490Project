@@ -3,8 +3,6 @@
  //$api = 'iiHnOKfno2Mgkt5AynpvPpUQTEyxE77jo1RU8PIv';
  //$api1 = 'UXGblncZDk0jehKCvU7bicRIfW8IlfAFZoHurYUI';
 
-include ("google-county.php");
-
 //this function gets all ORI numbers in state and returns only ORI from required county
 function getPD($allPD,$county){
 
@@ -127,11 +125,5 @@ return $crimes;
 }
 //calls main function to test
 //will be called from dmzReceiver.php
-
-$zipcode ="08857";
-
-$state_county = receiveCurlGoogleCounty($zipcode);
-//echo $state_county['county'];
-
-print_r(getCrime($state_county['state'],$state_county['county']));
+//getCrime("NJ","bergen");
 ?>

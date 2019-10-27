@@ -1,5 +1,4 @@
 <?php
-include ('attom.php');
 
 //First function, Currently receives only an address that is url encoded for testing purposes
 //Makes call to api, receives a json string
@@ -53,24 +52,18 @@ function receiveCurlFlood($address){
         return $result_flood;
     }
 }
-//TO TEST THIS CODE
-$address= $attomAddresses;
+function getFlood($attomAddresses){
 
+$address= $attomAddresses;
 
 $result = array();
 foreach ($address as $key=>$street) {
     $single_addr=rawurlencode($street['street']);
-    //echo $single_addr;
-
-    //print_r($url_params);
-    for ($x=0;$x<3;$x++){
-        $result[$x]= receiveCurlFlood($single_addr);
-    }
-
+    $result[]= receiveCurlFlood($single_addr);
 }
-
-print_r($result);
-
+//print_r($result);
+return $result;
+}
 //$address = "323 Dr M.L.K. Jr. Blvd, Newark, NJ 07102";
 //$address = rawurlencode($address);
 //receiveCurlYelp($address);
