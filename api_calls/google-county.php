@@ -1,7 +1,5 @@
 <?php
 
-include ('attom.php');
-
 //Makes call to api, receives a json string
 //string then decoded into array
 function receiveCurlGoogleCounty($zipcode){
@@ -58,6 +56,6 @@ function receiveCurlGoogleCounty($zipcode){
     }
 }
 //TO TEST THIS CODE
-$zipcode =07103;
-receiveCurlGoogleCounty($zipcode);
+//$zipcode = 07103;
+//receiveCurlGoogleCounty($zipcode);
 ?>

@@ -2,12 +2,22 @@
 require_once __DIR__ . '/vendor/autoload.php';
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
+/*
+//include '../api_calls/attom.php';
+//include '../api_calls/crime.php';
+//include '../api_calls/yelp.php';
+//include '../api_calls/flood.php';
+//include '../api_calls/google-county.php';
+//include '../api_calls/gmap.php';
+*/
+
 include 'attom.php';
 include 'crime.php';
 include 'yelp.php';
 include 'flood.php';
+include 'google-county.php';
+include 'gmap.php';
 include 'rmq.php';
-
 
 //DMZ QUEUE
 $queueName = 'dmz_queue';
@@ -21,43 +31,42 @@ $channel->queue_declare($queueName, false, false, false, false);
 //function to process API requests
 function processMessage($message){
 
+    //receive zipcode from rmq message
+    $message = $message['zipcode'];
     echo "Processing message...\n";
     $zip = $message;
 
     //array,returning all api data back in array. each array item is all info from each api
     $returnApiData= array();
 
-    //attom api data
-    //extract data from api, and add it to array
+    echo "Calling attom API...\n";
     $returnApiData['attom'] = receiveCurl($zip);
+
+    echo "Calling Yelp API...\n";
     $returnApiData['yelp'] = getYelp($returnApiData['attom']);
+
+    echo "Calling Flood API...\n";
     $returnApiData['flood'] = getFlood($returnApiData['attom']);
 
-    //will call google api for map
-    //returnApiData['map'] = %function_name%($returnApiData['attom'])
+    echo "Calling Google County...\n";
+    $state_county = receiveCurlGoogleCounty($zip);
 
-    //will get arguments from google-county.php
-    $returnApiData['crime'] = getCrime('NJ','essex');
+    echo "Calling Crime API...\n";
+    $returnApiData['crime'] = getCrime($state_county['state'],$state_county['county']);
+
+    echo "Calling Google Api and Creating map...\n";
+    $returnApiData['map'] = receiveMap($returnApiData['attom']);
 
     //returns message to callback function to send back to rmq
     return $returnApiData;
 }
 
 //TESTING
-//call function to get attom api info, and example of how to access data inside this nested array.
-$returnedDataForTest = processMessage('07108');
+//$test['zipcode'] = '07601';
+//$returnedDataForTest = processMessage($test);
+//echo print_r($returnedDataForTest);
+//echo "\n";
 
-//tests by zipcode and echoes entire array with nested arrays inside. Demonstrates structure of array
-echo "Prints array. Take a look to understand the array structure\n";
-echo print_r($returnedDataForTest);
-//echo print_r($returnedDataForTest['flood']);
-echo "\n";
-
-//echo "Prints street as one line. Demonstrates how to access individual elements inside nested array\n";
-//echo $returnedDataForTest['attom'][0]['street']."\n";
-//echo $returnedDataForTest['attom'][1]['street']."\n";
-
-//END OF TESTING CODE
 
 //first process of received RMQ message
 //Not invoked unless there is RMQ message
