@@ -26,7 +26,7 @@ function receiveMap($locations){
     //url code that combines att addresses
     $url ="https://maps.googleapis.com/maps/api/staticmap?size=640x640"	.$addr1.$addr2.$addr3.$addr4.$addr5."&key=".$api_key;
     //downloading url to png locally
-    $dest='googleMap.png';
+    $dest='../images/googleMap.png';
     $download=file_put_contents($dest, file_get_contents($url));
     //encoding to send to rmq *incomplete*
     $image=file_get_contents("googleMap.png");

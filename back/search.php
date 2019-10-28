@@ -1,11 +1,11 @@
 
 <?php
 
-
+session_start();
 require('../rmq/apiClient.php');
 
-$zip = $_POST['zip'];
-//$zip = '07108';
+//$zip = $_POST['zip'];
+$zip = '07601';
 
 $api_call = new RabbitMQAPIClient();
 
@@ -30,7 +30,7 @@ $_SESSION["map-api"]= $response["map"];
 
 
 if( isset($response) AND !empty($_SESSION['attom-api']) ):
-header( "location: result.php" );
+header( "location: ../result.php" );
 endif;
 
 

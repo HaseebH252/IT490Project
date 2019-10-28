@@ -7,10 +7,10 @@ $yelp = $_SESSION["yelp-api"];
 $map = $_SESSION["map-api"];
 
 
-$map = base64_decode($map);
-file_put_contents("images/map.jpg", $map);
+//$map = base64_decode($map);
+//file_put_contents("images/googleMap.png", $map);
 
-print_r($attom);
+//print_r($attom[0]["street"]);
 ?>
 
 
@@ -42,20 +42,20 @@ print_r($attom);
 
 
                 <div class="col-md-8">
-                    <img alt="Google Map" src="images/map.jpg" width="100%">
+                    <img alt="Google Map" src="images/googleMap.png" width="100%">
                 </div>
 
 
-                <div class="col-md-4" style="overflow-y:auto;height:auto;">
+                <div class="col-md-4" style="overflow-y:auto;">
 
 
                     <div class="list-group">
 
                         <?php
-                        $line1 = array();
+                        
                         for ($x = 0; $x < 5; $x++){
-                            $line1[$x] = $attom[$x]["line1"];
-                            $line2[$x] = $attom[$x]["line2"];
+                            $line1 = $attom[$x]["line1"];
+                            $line2 = $attom[$x]["line2"];
 
                             echo "
                             <a href=\"#\" class=\"list-group-item list-group-item-action flex-column align-items-start active\">
@@ -98,9 +98,9 @@ print_r($attom);
                         <tbody>
 
                         <?php
-                        for ($c=0;$c<12;$c++){
-                            $crime_name = $crime[$c];
-                            $crime_num = $crime[$crime_name];
+                        foreach($crime as $c=>$crime_name){
+                            $crime_name = $c;
+                            $crime_num = $crime[$c];
 
                             echo "<tr>
                          <td>";

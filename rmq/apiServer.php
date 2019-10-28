@@ -2,21 +2,21 @@
 require_once __DIR__ . '/vendor/autoload.php';
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
-/*
-//include '../api_calls/attom.php';
-//include '../api_calls/crime.php';
-//include '../api_calls/yelp.php';
-//include '../api_calls/flood.php';
-//include '../api_calls/google-county.php';
-//include '../api_calls/gmap.php';
-*/
 
-include 'attom.php';
+include '../api_calls/attom.php';
+include '../api_calls/crime.php';
+include '../api_calls/yelp.php';
+include '../api_calls/flood.php';
+include '../api_calls/google-county.php';
+include '../api_calls/gmap.php';
+
+
+/*include 'attom.php';
 include 'crime.php';
 include 'yelp.php';
 include 'flood.php';
 include 'google-county.php';
-include 'gmap.php';
+include 'gmap.php';*/
 include 'rmq.php';
 
 //DMZ QUEUE

@@ -1,0 +1,208 @@
+Processing message...
+Prints array. Take a look to understand the array structure
+Array
+(
+    [attom] => Array
+        (
+            [0] => Array
+                (
+                    [street] => 194 JOHNSON AVE # 196, NEWARK, NJ 07108
+                    [latitude] => 40.713320
+                    [longitude] => -74.194331
+                    [line1] => 194 JOHNSON AVE # 196
+                    [line2] => NEWARK, NJ 07108
+                )
+
+            [1] => Array
+                (
+                    [street] => 202 RIDGEWOOD AVE, NEWARK,NJ 07108
+                    [latitude] => 40.716493
+                    [longitude] => -74.196591
+                    [line1] => 202 RIDGEWOOD AVE
+                    [line2] => NEWARK,NJ 07108
+                )
+
+            [2] => Array
+                (
+                    [street] => 496 IRVINE TURNER BLVD, NEWARK, NJ 07108
+                    [latitude] => 40.716814
+                    [longitude] => -74.195754
+                    [line1] => 496 IRVINE TURNER BLVD
+                    [line2] => NEWARK, NJ 07108
+                )
+
+            [3] => Array
+                (
+                    [street] => 493 IRVINE TURNER BLVD # 495, NEWARK, NJ 07108
+                    [latitude] => 40.716864
+                    [longitude] => -74.195356
+                    [line1] => 493 IRVINE TURNER BLVD # 495
+                    [line2] => NEWARK, NJ 07108
+                )
+
+            [4] => Array
+                (
+                    [street] => 163 HILLSIDE AVE # 165, NEWARK, NJ 07108
+                    [latitude] => 40.717686
+                    [longitude] => -74.194077
+                    [line1] => 163 HILLSIDE AVE # 165
+                    [line2] => NEWARK, NJ 07108
+                )
+
+        )
+
+    [yelp] => Array
+        (
+            [0] => Array
+                (
+                    [res_name] => Array
+                        (
+                            [0] => Casa d'Paco
+                            [1] => Tops Diner
+                            [2] => The Vanguard
+                        )
+
+                    [location] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [0] => 73 Warwick St
+                                    [1] => Newark, NJ 07105
+                                )
+
+                            [1] => Array
+                                (
+                                    [0] => 500 Passaic Ave
+                                    [1] => East Newark, NJ 07029
+                                )
+
+                            [2] => Array
+                                (
+                                    [0] => 705 Frank E Rodgers Blvd S
+                                    [1] => Harrison, NJ 07029
+                                )
+
+                        )
+
+                )
+
+            [1] => Array
+                (
+                    [res_name] => Array
+                        (
+                            [0] => Casa d'Paco
+                            [1] => Tops Diner
+                            [2] => The Vanguard
+                        )
+
+                    [location] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [0] => 73 Warwick St
+                                    [1] => Newark, NJ 07105
+                                )
+
+                            [1] => Array
+                                (
+                                    [0] => 500 Passaic Ave
+                                    [1] => East Newark, NJ 07029
+                                )
+
+                            [2] => Array
+                                (
+                                    [0] => 705 Frank E Rodgers Blvd S
+                                    [1] => Harrison, NJ 07029
+                                )
+
+                        )
+
+                )
+
+            [2] => Array
+                (
+                    [res_name] => Array
+                        (
+                            [0] => Casa d'Paco
+                            [1] => Tops Diner
+                            [2] => The Vanguard
+                        )
+
+                    [location] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [0] => 73 Warwick St
+                                    [1] => Newark, NJ 07105
+                                )
+
+                            [1] => Array
+                                (
+                                    [0] => 500 Passaic Ave
+                                    [1] => East Newark, NJ 07029
+                                )
+
+                            [2] => Array
+                                (
+                                    [0] => 705 Frank E Rodgers Blvd S
+                                    [1] => Harrison, NJ 07029
+                                )
+
+                        )
+
+                )
+
+        )
+
+    [flood] => Array
+        (
+            [0] => Array
+                (
+                    [flood-risk] => 
+                    [flood-zone] => 
+                )
+
+            [1] => Array
+                (
+                    [flood-risk] => AREA OF MINIMAL FLOOD HAZARD
+                    [flood-zone] => X
+                )
+
+            [2] => Array
+                (
+                    [flood-risk] => AREA OF MINIMAL FLOOD HAZARD
+                    [flood-zone] => X
+                )
+
+            [3] => Array
+                (
+                    [flood-risk] => AREA OF MINIMAL FLOOD HAZARD
+                    [flood-zone] => X
+                )
+
+            [4] => Array
+                (
+                    [flood-risk] => 
+                    [flood-zone] => 
+                )
+
+        )
+
+    [crime] => Array
+        (
+            [aggravated-assault] => 1812
+            [arson] => 16
+            [burglary] => 2054
+            [homicide] => 99
+            [human-trafficing] => 0
+            [larceny] => 8435
+            [motor-vehicle-theft] => 3314
+            [property-crime] => 13803
+            [rape] => 253
+            [rape-legacy] => 0
+            [robbery] => 1338
+            [violent-crime] => 3502
+        )
+
+)
+1

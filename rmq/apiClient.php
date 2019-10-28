@@ -77,6 +77,6 @@ class RabbitMQAPIClient
 
 }
 
-echo ' [.] Got ', $response, "\n";
+//echo ' [.] Got ', $response, "\n";
 ?>
 
