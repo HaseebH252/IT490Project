@@ -50,15 +50,26 @@ print_r($attom);
 
 
                     <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">List group item heading</h5>
-                                <small>3 days ago</small>
+
+                        <?php
+                        $line1 = array();
+                        for ($x = 0; $x < 5; $x++){
+                            $line1[$x] = $attom[$x]["line1"];
+                            $line2[$x] = $attom[$x]["line2"];
+
+                            echo "
+                            <a href=\"#\" class=\"list-group-item list-group-item-action flex-column align-items-start active\">
+                            <div class=\"d-flex w-100 justify-content-between\">
+                                <h5 class=\"mb-1\">".$line1."</h5>"."
                             </div>
-                            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget
-                                risus varius blandit.</p>
-                            <small>Donec id elit non mi porta.</small>
+                            <p class=\"mb-1\">".$line2."</p>
                         </a>
+                            ";
+
+                        }
+
+
+                        ?>
                     </div>
 
 
@@ -67,7 +78,7 @@ print_r($attom);
             <div class="row">
                 <div class="col-md-6">
                     <p>
-                        this is where the House info will go
+
 
                     </p>
                 </div>
@@ -76,7 +87,7 @@ print_r($attom);
                         <thead>
                         <tr>
                             <th>
-                                Crime
+                                Crime by County
                             </th>
                             <th>
                                 Number
@@ -87,15 +98,24 @@ print_r($attom);
                         <tbody>
 
                         <?php
-                        echo "<tr>
+                        for ($c=0;$c<12;$c++){
+                            $crime_name = $crime[$c];
+                            $crime_num = $crime[$crime_name];
+
+                            echo "<tr>
                          <td>";
-                        echo "Murder";
-                        echo " </td>
+                            echo $crime_name;
+                            echo " </td>
                             <td>";
-                        echo "18";
-                        echo "</td>
+                            echo $crime_num;
+                            echo "</td>
 
                         </tr>";
+                        }
+
+
+
+
                         ?>
 
                         </tbody>
@@ -107,10 +127,37 @@ print_r($attom);
             <div class="row">
 
                 <div class="col-md-6">
-                    <p>
-                        Flood data?
 
-                    </p>
+                    <?php
+
+                    for ($f=0;$f<5;$f++){
+
+                        $flood_risk = $flood[$f]["flood-risk"];
+                        $flood_zone = $flood[$f]["flood-zone"];
+
+
+                        if (!isset($flood_risk)){
+                            $flood_risk = "Flood API Does Not Have Risk for this Address";
+                        }
+                        if (!isset($flood_zone)){
+                            $flood_zone = "Flood API Does Not Have Zone for this Address";
+                        }
+
+
+
+
+                        echo "
+                        
+                        <h6>Flood Risk: ".$flood_risk." </h6>
+                        <h6>Flood Zone: ".$flood_zone." </h6>
+                        
+                        ";
+
+
+                    }
+
+
+                    ?>
 
                 </div>
 
