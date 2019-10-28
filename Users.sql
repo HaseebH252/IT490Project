@@ -25,6 +25,7 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `accounts`
 --
+
 CREATE TABLE `accounts` (
   `Fname` varchar(32) NOT NULL,
   `Lname` varchar(32) NOT NULL,

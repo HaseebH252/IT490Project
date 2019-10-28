@@ -2,61 +2,44 @@
 <?php
 
 
-//require('rmq/apiClient.php');
+require('../rmq/apiClient.php');
 
 $zip = $_POST['zip'];
+//$zip = '07108';
 
+$api_call = new RabbitMQAPIClient();
 
-/*$api_call = new RabbitMQAPIClient();
+$response = array();
+
 
 $response = $api_call->search($zip);
 
-print_r($response);*/
+//echo gettype($response) . "\n \n";
+
+$response = json_decode($response, true);
 
 
-
-//image from dmz
-$image = file_get_contents("../images/map.jpg");
-//convert image to base64 then to json file
-$data = base64_encode($image);
-$json = json_encode($data);
-
-//SEND TO RMQ
-/////////////////////
-
-//then decode
-
-$return_json = json_decode($json);
-$return_data = base64_decode($return_json);
-//recreate image on front end
-file_put_contents("../images/decode.jpg",$return_data);
+//print_r($response);
 
 
+$_SESSION["attom-api"]= $response["attom"];
+$_SESSION["crime-api"]= $response["crime"];
+$_SESSION["flood-api"]= $response["flood"];
+$_SESSION["yelp-api"]= $response["yelp"];
+$_SESSION["map-api"]= $response["map"];
 
 
-/*
-$_SESSION["attom-api"]= $response["attom-api"];
-$_SESSION["crime-api"]= $response["crime-api"];
-$_SESSION["flood-api"]= $response["flood-api"];
-$_SESSION["yelp-api"]= $response["yelp-api"];
+if( isset($response) AND !empty($_SESSION['attom-api']) ):
+header( "location: result.php" );
+endif;
 
-*/
+
+/*print_r($_SESSION["attom-api"]);
+print_r($_SESSION["crime-api"]);
+print_r($_SESSION["flood-api"]);
+print_r($_SESSION["yelp-api"]);*/
 
 
 
 
 ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-

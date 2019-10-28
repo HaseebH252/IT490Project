@@ -1,6 +1,16 @@
 <?php
+session_start();
+$attom = $_SESSION["attom-api"];
+$crime = $_SESSION["crime-api"];
+$flood = $_SESSION["flood-api"];
+$yelp = $_SESSION["yelp-api"];
+$map = $_SESSION["map-api"];
 
 
+$map = base64_decode($map);
+file_put_contents("images/map.jpg", $map);
+
+print_r($attom);
 ?>
 
 
@@ -76,16 +86,17 @@
                         </thead>
                         <tbody>
 
+                        <?php
+                        echo "<tr>
+                         <td>";
+                        echo "Murder";
+                        echo " </td>
+                            <td>";
+                        echo "18";
+                        echo "</td>
 
-                        <tr>
-                            <td>
-                                Murder
-                            </td>
-                            <td>
-                                15
-                            </td>
-
-                        </tr>
+                        </tr>";
+                        ?>
 
                         </tbody>
                     </table>
