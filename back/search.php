@@ -4,8 +4,11 @@
 session_start();
 require('../rmq/apiClient.php');
 
-//$zip = $_POST['zip'];
-$zip = '07601';
+$zip = $_POST['zip'];
+
+//$zip = '07601';
+
+echo "Loading data for :".$zip."\n";
 
 $api_call = new RabbitMQAPIClient();
 
@@ -38,8 +41,4 @@ endif;
 print_r($_SESSION["crime-api"]);
 print_r($_SESSION["flood-api"]);
 print_r($_SESSION["yelp-api"]);*/
-
-
-
-
 ?>

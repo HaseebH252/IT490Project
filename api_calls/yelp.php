@@ -77,11 +77,12 @@ function getYelp($attomAddresses){
         $url_params['limit'] = $limit;
 
         //print_r($url_params);
-        for ($x = 0; $x < 3; $x++) {
+        for ($x = 0; $x < 5; $x++) {
             $result[$x] = receiveCurlYelp($url_params);
         }
     }
-    return $result;
     //print_r($result);
+    return $result;
+
 }
 ?>
