@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 
-
-echo "Back-end pull engaged"
+echo "DMZ pull engaged"
 echo "Enter version number you would like to pull"
 read version
 
-#pulling username
+#pulling username - NOT USED
 clientUser="po42"
 
 #server username
@@ -25,7 +24,7 @@ vcAddress="192.168.1.103"
 
 #origin path of files on Version Control server
 #test path
-originPath="/home/vc/Desktop/back-end/V$version/"
+originPath="/home/vc/Desktop/dmz/V$version/"
 
 #working path
 #originPath="/home/vc/Desktop/front-end/V$version/"

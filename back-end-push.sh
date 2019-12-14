@@ -14,12 +14,12 @@ vcPass="lokos13"
 
 #server IP
 #testing server
-vcAddress="192.168.1.252"
+#vcAddress="192.168.1.252"
 
 #working server
-#vcAddress=""
+vcAddress="192.168.1.103"
 
-#origin path - path to files you are pushing *UPDATE FOR BACK END FILES ONLY*
+#origin path - path to files you are pushing
 #test path
 originPath="/var/www/html/IT490Project"
 

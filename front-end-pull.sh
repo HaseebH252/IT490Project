@@ -17,10 +17,10 @@ vcPass="lokos13"
 
 #server IP
 #testing server
-vcAddress="192.168.1.252"
+#vcAddress="192.168.1.252"
 
 #working server
-#vcAddress=""
+vcAddress="192.168.1.103"
 
 #origin path of files on Version Control server
 #test path

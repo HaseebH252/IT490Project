@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "Pushing Front-end code..."
+echo "Pushing dmz code..."
 echo "Enter version number you would like to push"
 read version
 
@@ -28,7 +28,7 @@ originPath="/var/www/html/IT490Project"
 
 #destination path - path for files on version control server
 #test path
-destinationPath="/home/vc/Desktop/front-end/V$version/."
+destinationPath="/home/vc/Desktop/dmz/V$version/."
 
 #working path
 #destinationPath="/home/vc/Desktop/front-end/V$version/."
