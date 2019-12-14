@@ -1,6 +1,6 @@
 <?php
 /* Database connection settings */
-$sql_host = 'localhost';
+$sql_host = '192.168.1.101';
 $sql_user = 'test';
 $sql_pass = 'Today123$';
 $sql_db = 'Users';

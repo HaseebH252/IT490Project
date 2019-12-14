@@ -3,10 +3,10 @@
 
 
 require ('rmq/authClient.php');
-$first_name = $mysqli->escape_string($_POST['firstname']);
-$last_name = $mysqli->escape_string($_POST['lastname']);
-$email = $mysqli->escape_string($_POST['email']);
-$password = $mysqli->escape_string($_POST['password']);
+$first_name = $_POST['firstname'];
+$last_name = $_POST['lastname'];
+$email = $_POST['email'];
+$password = $_POST['password'];
 
 $hash=password_hash($password, PASSWORD_DEFAULT);
 
