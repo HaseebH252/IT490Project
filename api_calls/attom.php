@@ -27,7 +27,7 @@ function attomApiCall($postalCode,$pagesize){
         CURLOPT_CUSTOMREQUEST => "GET",
         CURLOPT_HTTPHEADER => array(
             "accept: application/json",
-            "apikey: d85d17849905c3125d52318e0898e80b",
+            "apikey: 7dd51036a4157ae0626c45efb07f7f8a",
         ),
     ));
 
@@ -66,7 +66,7 @@ function receiveCurl($zip){
     }
 
     //debug
-    //echo print_r($addresses);
+    echo print_r($addresses);
     //get address as a line
     //$street = $response->property[0]->address->oneLine."\n";
     //echo print_r($street);
