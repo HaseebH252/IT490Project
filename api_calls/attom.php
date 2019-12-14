@@ -66,7 +66,7 @@ function receiveCurl($zip){
     }
 
     //debug
-    echo print_r($addresses);
+   // echo print_r($addresses);
     //get address as a line
     //$street = $response->property[0]->address->oneLine."\n";
     //echo print_r($street);

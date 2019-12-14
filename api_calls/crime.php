@@ -117,9 +117,9 @@ foreach ($allORI as $ori){
 }
 
 //debug
-echo $county."\n";
-echo print_r($allORI)."\n";
-echo print_r($crimes)."\n";
+//echo $county."\n";
+//echo print_r($allORI)."\n";
+//echo print_r($crimes)."\n";
 return $crimes;
 
 }

@@ -64,7 +64,7 @@ foreach ($address as $key=>$street) {
 //print_r($result);
 return $result;
 }
-$address = "323 Dr M.L.K. Jr. Blvd, Newark, NJ 07102";
-$address = rawurlencode($address);
-receiveCurlYelp($address);
+//$address = "323 Dr M.L.K. Jr. Blvd, Newark, NJ 07102";
+//$address = rawurlencode($address);
+//receiveCurlYelp($address);
 ?>
