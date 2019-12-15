@@ -21,6 +21,7 @@ $channel->queue_declare($queueName, false, false, false, false);
 
 // Create connection
 $conn = new mysqli($sql_host,$sql_user,$sql_pass,$sql_db);
+$backup_conn = new mysqli($backup_host,$sql_user,$$sql_pass,$sql_db);
 //========================================================================================
 
 //========================================================================================
@@ -32,14 +33,18 @@ function auth($receivedEmail,$receivedPass){
     $username = "root";
     $password = "password";
     $db = "it490";*/
-  global $conn;
+    global $conn;
+    global $backup_conn;
   global $sql_db;
     // Create connection
     //$conn = new mysqli($sql_host,$sql_user,$sql_pass,$sql_db);
     // Check connection
     echo "SQL Connected";
     if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+	    // die("Connection failed: " . $conn->connect_error);
+	echo "\n Master DB is down, connecting to backup....\n";
+	$conn = $backup_conn;
+
     }
 
     //DECLARE VARIABLES FOR EMAIL AND PASSWORD
