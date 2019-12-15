@@ -1,11 +1,8 @@
 #!/usr/bin/env bash
 
-echo "Front end pull engaged"
+echo "Front-end pull engaged"
 echo "Enter version number you would like to pull"
 read version
-
-#pulling username
-clientUser="po42"
 
 #server username
 vcUser="vc"
@@ -36,6 +33,6 @@ destinationPath="/var/www/html/"
 #working path
 #destinationPath="/var/www/html/"
 
-mkdir -p $destinationPath
+#mkdir -p $destinationPath
 chmod -R 777 $destinationPath
 sshpass -p $vcPass scp -r $vcUser@$vcAddress:$originPath $destinationPath
