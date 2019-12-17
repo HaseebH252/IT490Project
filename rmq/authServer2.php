@@ -143,17 +143,19 @@ function reg($receivedFname,$receivedLname,$receivedEmail,$receivedPass){
 function logging($receivedType,$receivedMessage){
     echo "log() engaged";
     //DB INFO
-    /*  $servername = "localhost";
-      $username = "root";
-      $password = "password";
-      $db = "it490";*/
-    global $conn;
-    // Create connection
-    //$conn = new mysqli($sql_host,$sql_user,$sql_pass,$sql_db);
-    // Check connection
-    echo "SQL Connected";
+    $sql_host = "localhost";
+    $sql_user = "test";
+    $sql_pass = "Today123$";
+    $sql_db = "Users";
+    $conn = new mysqli($sql_host,$sql_user,$sql_pass,$sql_db);
     if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+        $backup_host = "192.168.1.110";
+        $sql_user = "test";
+        $sql_pass = "Today123$";
+        $sql_db = "Users";
+        echo "\n Master DB is down, connecting to backup....\n";
+        $conn = new mysqli($backup_host,$sql_user,$sql_pass,$sql_db);
+
     }
 
     //DECLARE VARIABLES FOR Log type AND log message
