@@ -1,6 +1,6 @@
 <?php
 
-error_reporting(E_ERROR | E_WARNING | E_PARSE);
+//error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
 require_once __DIR__ . '/vendor/autoload.php';
 use PhpAmqpLib\Connection\AMQPStreamConnection;
@@ -12,7 +12,7 @@ include '../api_calls/yelp.php';
 include '../api_calls/flood.php';
 include '../api_calls/google-county.php';
 include '../api_calls/gmap.php';
-
+include '../api_calls/school.php';
 
 /*include 'attom.php';
 include 'crime.php';
@@ -58,7 +58,7 @@ function processMessage($message){
     $returnApiData['crime'] = getCrime($state_county['state'],$state_county['county']);
 
     echo "Calling Google Api and Creating map...\n";
-    $returnApiData['map'] = receiveMap($returnApiData['attom']);
+    $returnApiData['map'] = receiveMap($zip);
 
     //returns message to callback function to send back to rmq
     return $returnApiData;
